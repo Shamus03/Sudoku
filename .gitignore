@@ -23,7 +23,17 @@
 *.a
 *.lib
 
+<<<<<<< HEAD
+# Swap files
+*.swp
+
+=======
+>>>>>>> 54a5ab4... Initial commit
 # Executables
 *.exe
 *.out
 *.app
+<<<<<<< HEAD
+SolveSudoku
+=======
+>>>>>>> 54a5ab4... Initial commit
