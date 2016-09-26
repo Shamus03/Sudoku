@@ -5,10 +5,9 @@ using namespace std;
 
 Sudoku::Sudoku()
 {
-    dimension = SUDOKU_SIZE * SUDOKU_SIZE;
-    remaining = dimension * dimension;
+    remaining = DIMENSION * DIMENSION;
 
-    for (int i = 0; i < dimension * dimension; i++)
+    for (int i = 0; i < DIMENSION * DIMENSION; i++)
     {
         grid[i] = 0;
     }
@@ -16,11 +15,10 @@ Sudoku::Sudoku()
 
 Sudoku::Sudoku(string numbers)
 {
-    dimension = SUDOKU_SIZE * SUDOKU_SIZE;
-    remaining = dimension * dimension;
+    remaining = DIMENSION * DIMENSION;
     int num, i;
 
-    for (i = 0; i < dimension * dimension; i++)
+    for (i = 0; i < DIMENSION * DIMENSION; i++)
     {
         num = numbers[i] - '0';
         grid[i] = num;
@@ -32,7 +30,7 @@ Sudoku::Sudoku(string numbers)
 
 bool Sudoku::set(int absolute, int val)
 {
-    return set(absolute / dimension, absolute % dimension, val);
+    return set(absolute / DIMENSION, absolute % DIMENSION, val);
 }
 
 bool Sudoku::set(int row, int col, int val)
@@ -44,7 +42,7 @@ bool Sudoku::set(int row, int col, int val)
         else if (get(row, col) > 0 && val == 0)
             remaining++;
 
-        grid[row * dimension + col] = val;
+        grid[row * DIMENSION + col] = val;
 
         return true;
     }
@@ -57,7 +55,7 @@ bool Sudoku::isValidMove(int row, int col, int val)
     if (val == 0)
         return true;
 
-    if (val < 1 || val > dimension)
+    if (val < 1 || val > DIMENSION)
         return false;
 
     if (get(row, col) == val)
@@ -65,7 +63,7 @@ bool Sudoku::isValidMove(int row, int col, int val)
 
     int i;
     int gRow, gCol;
-    for (i = 0; i < dimension; i++)
+    for (i = 0; i < DIMENSION; i++)
     {
         gRow = row - row % SUDOKU_SIZE;
         gCol = col - col % SUDOKU_SIZE;
@@ -83,20 +81,20 @@ void Sudoku::print()
 {
     cout << "Sudoku with " << remaining << " remaining:" << endl;
     int i, j, k;
-    for (i = 0; i < dimension; i++)
+    for (i = 0; i < DIMENSION; i++)
     {
-        for (j = 0; j < dimension; j++)
+        for (j = 0; j < DIMENSION; j++)
         {
             cout << get(i, j) << " ";
-            if (j % SUDOKU_SIZE == SUDOKU_SIZE - 1 && j < dimension - 1)
+            if (j % SUDOKU_SIZE == SUDOKU_SIZE - 1 && j < DIMENSION - 1)
             {
                 cout << "| ";
             }
         }
         cout << endl;
-        if (i % SUDOKU_SIZE == SUDOKU_SIZE - 1 && i < dimension - 1)
+        if (i % SUDOKU_SIZE == SUDOKU_SIZE - 1 && i < DIMENSION - 1)
         {
-            for (k = 0; k < (dimension + SUDOKU_SIZE - 1) * 2 - 1; k++)
+            for (k = 0; k < (DIMENSION + SUDOKU_SIZE - 1) * 2 - 1; k++)
             {
                 cout << "-";
             }

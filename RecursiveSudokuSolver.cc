@@ -21,13 +21,13 @@ bool RecursiveSudokuSolver::solve(Sudoku sud, int start)
         return true;
     }
 
-    if (start > sud.getDimension() * sud.getDimension())
+    if (start > DIMENSION * DIMENSION)
         return false;
     
     if (sud.get(start) > 0)
         return solve(sud, start + 1);
 
-    for (int i = 1; i <= sud.getDimension(); i++)
+    for (int i = 1; i <= DIMENSION; i++)
     {
         if (sud.set(start, i))
         {
