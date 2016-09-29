@@ -23,24 +23,28 @@ int main(int argc, char* argv[])
         int i = 0;
         while (getline(myfile, line))
         {
-            cout << "Sudoku #" << i++ << ":" << endl;
-
-            RecursiveSudokuSolver solver = RecursiveSudokuSolver (Sudoku(line));
-
-            cout << "Before solve:" << endl;
-            solver.print();
-
-            cout << endl << "After solve:" << endl;
-            if (solver.solve())
+            if (line.length() > 0 && line.at(0) >= '0' && line.at(0) <= '9')
             {
+                cout << "Sudoku #" << i++ << ":" << endl;
+
+                RecursiveSudokuSolver solver =
+                    RecursiveSudokuSolver (Sudoku(line));
+
+                cout << "Before solve:" << endl;
                 solver.print();
-            }
-            else
-            {
-                cout << endl << "No solution." << endl;
-            }
 
-            cout << endl;
+                cout << endl << "After solve:" << endl;
+                if (solver.solve())
+                {
+                    solver.print();
+                }
+                else
+                {
+                    cout << endl << "No solution." << endl;
+                }
+
+                cout << endl;
+            }
         }
 
         return 0;
