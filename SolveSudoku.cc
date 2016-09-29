@@ -30,9 +30,15 @@ int main(int argc, char* argv[])
             cout << "Before solve:" << endl;
             solver.print();
 
-            solver.solve();
             cout << endl << "After solve:" << endl;
-            solver.print();
+            if (solver.solve())
+            {
+                solver.print();
+            }
+            else
+            {
+                cout << endl << "No solution." << endl;
+            }
 
             cout << endl;
         }
