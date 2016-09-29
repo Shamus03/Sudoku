@@ -7,7 +7,6 @@ class SudokuSolver
 {
     protected:
         Sudoku sudoku;
-        bool solved;
     public:
         virtual bool solve() = 0;
         virtual void print() = 0;

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include "CrooksSudokuSolver.h"
 #include "RecursiveSudokuSolver.h"
 using namespace std;
 
@@ -20,30 +21,28 @@ int main(int argc, char* argv[])
     {
         string line;
 
-        int i = 0;
+        int i = 1;
         while (getline(myfile, line))
         {
             if (line.length() > 0 && line.at(0) >= '0' && line.at(0) <= '9')
             {
-                cout << "Sudoku #" << i++ << ":" << endl;
+                cout << "Sudoku #" << i << ":" << endl;
 
-                RecursiveSudokuSolver solver =
-                    RecursiveSudokuSolver (Sudoku(line));
+                CrooksSudokuSolver solver =
+                    CrooksSudokuSolver (Sudoku(line));
 
                 cout << "Before solve:" << endl;
+                
                 solver.print();
 
                 cout << endl << "After solve:" << endl;
-                if (solver.solve())
-                {
-                    solver.print();
-                }
-                else
-                {
-                    cout << endl << "No solution." << endl;
-                }
+                solver.solve();
+
+                solver.print();
 
                 cout << endl;
+
+                i++;
             }
         }
 

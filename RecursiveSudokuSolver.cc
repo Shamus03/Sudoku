@@ -43,6 +43,7 @@ bool RecursiveSudokuSolver::solve(Sudoku sud, int start)
 
 void RecursiveSudokuSolver::print()
 {
-    cout << "Recursive Sudoku Solver" << endl;
+    cout << "Recursive Sudoku Solver "
+        << (sudoku.isSolved() ? "(solved)" : "(unsolved)") << endl;
     sudoku.print();
 }
