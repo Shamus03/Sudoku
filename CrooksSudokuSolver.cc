@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Sudoku.h"
 #include "CrooksSudokuSolver.h"
+#include "RecursiveSudokuSolver.h"
 using namespace std;
 
 CrooksSudokuSolver::CrooksSudokuSolver(Sudoku sudok)
@@ -54,6 +55,13 @@ bool CrooksSudokuSolver::solveExposedSingles()
                 }
             }
         }
+    }
+
+    if (!sudoku.isSolved())
+    {
+        RecursiveSudokuSolver finishIt (sudoku);
+        finishIt.solve();
+        sudoku = finishIt.getSudoku();
     }
 
     return sudoku.isSolved();

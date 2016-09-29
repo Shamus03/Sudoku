@@ -8,6 +8,7 @@ class SudokuSolver
     protected:
         Sudoku sudoku;
     public:
+        Sudoku getSudoku() { return sudoku; };
         virtual bool solve() = 0;
         virtual void print() = 0;
 };
