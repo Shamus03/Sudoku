@@ -8,6 +8,7 @@ class CrooksSudokuSolver : public SudokuSolver
 {
     private:
         bool solveExposedSingles();
+        bool solveHiddenSingles();
     public:
         CrooksSudokuSolver(Sudoku sudok);
         bool solve();

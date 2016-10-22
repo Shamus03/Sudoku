@@ -77,6 +77,8 @@ bool Sudoku::set(int row, int col, int val)
 
         for (i = 0; i < DIMENSION; i++)
         {
+            markup[(row * DIMENSION + col) * DIMENSION + i] = false;
+
             markup[(row * DIMENSION + i) * DIMENSION + val - 1] = false;
             markup[(i * DIMENSION + col) * DIMENSION + val - 1] = false;
 

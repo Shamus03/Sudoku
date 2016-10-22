@@ -11,49 +11,15 @@ CrooksSudokuSolver::CrooksSudokuSolver(Sudoku sudok)
 
 bool CrooksSudokuSolver::solve()
 {
-    return solveExposedSingles();
-}
-
-bool CrooksSudokuSolver::solveExposedSingles()
-{
     bool madeProgress = true;
-    int row, col, num;
-    int singleNum;
-    int numPossible;
-
-    while (!sudoku.isSolved() && madeProgress)
+    
+    while (madeProgress)
     {
         madeProgress = false;
 
-        for (row = 0; row < DIMENSION; row++)
+        while (solveExposedSingles() || solveHiddenSingles())
         {
-            for (col = 0; col < DIMENSION; col++)
-            {
-                if (sudoku.get(row, col) != 0)
-                    continue;
-
-                singleNum = 0;
-                numPossible = 0;
-                for (num = 1; num <= DIMENSION; num++)
-                {
-                    if (sudoku.isValidMove(row, col, num))
-                    {
-                        numPossible++;
-                        singleNum = num;
-                        if (numPossible > 1)
-                        {
-                            // A second possibility has been found, so quit
-                            break;
-                        }
-                    }
-                }
-
-                if (numPossible == 1)
-                {
-                    sudoku.set(row, col, singleNum);
-                    madeProgress = true;
-                }
-            }
+            madeProgress = true;
         }
     }
 
@@ -65,6 +31,96 @@ bool CrooksSudokuSolver::solveExposedSingles()
     }
 
     return sudoku.isSolved();
+}
+
+bool CrooksSudokuSolver::solveExposedSingles()
+{
+    bool madeProgress = false;
+    int row, col, num;
+    int singleNum;
+    int numPossible;
+
+    for (row = 0; row < DIMENSION; row++)
+    {
+        for (col = 0; col < DIMENSION; col++)
+        {
+            if (sudoku.get(row, col) != 0)
+                continue;
+
+            singleNum = 0;
+            numPossible = 0;
+            for (num = 1; num <= DIMENSION; num++)
+            {
+                if (sudoku.isValidMove(row, col, num))
+                {
+                    numPossible++;
+                    singleNum = num;
+                    if (numPossible > 1)
+                    {
+                        // A second possibility has been found, so quit
+                        break;
+                    }
+                }
+            }
+
+            if (numPossible == 1)
+            {
+                sudoku.set(row, col, singleNum);
+                madeProgress = true;
+            }
+        }
+    }
+
+    return madeProgress;
+}
+
+bool CrooksSudokuSolver::solveHiddenSingles()
+{
+    bool madeProgress = false;
+
+    int i, j, num;
+    int rowCount, colCount;
+    int rowSingle, colSingle;
+
+    for (i = 0; i < DIMENSION; i++)
+    {
+        rowCount = 0;
+        colCount = 0;
+        rowSingle = -1;
+        colSingle = -1;
+
+        for (num = 1; num <= DIMENSION; num++)
+        {
+            for (j = 0; j < DIMENSION; j++)
+            {
+                if (sudoku.isValidMove(i, j, num))
+                {
+                    rowSingle = j;
+                    rowCount++;
+                }
+
+                if (sudoku.isValidMove(j, i, num))
+                {
+                    colSingle = j;
+                    colCount++;
+                }
+            }
+
+            if (rowCount == 1)
+            {
+                sudoku.set(i, rowSingle, num);
+                madeProgress = true;
+            }
+
+            if (colCount == 1)
+            {
+                sudoku.set(colSingle, i, num);
+                madeProgress = true;
+            }
+        }
+    }
+
+    return madeProgress;
 }
 
 void CrooksSudokuSolver::print()
