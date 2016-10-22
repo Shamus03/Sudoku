@@ -7,7 +7,7 @@ class Sudoku;
 class RecursiveSudokuSolver : public SudokuSolver
 {
     private:
-        bool solve(Sudoku sud, int start);
+        bool solve(Sudoku sud, int row, int col);
     public:
         RecursiveSudokuSolver(Sudoku sudok);
         bool solve();

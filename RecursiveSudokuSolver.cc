@@ -10,10 +10,10 @@ RecursiveSudokuSolver::RecursiveSudokuSolver(Sudoku sudok)
 
 bool RecursiveSudokuSolver::solve()
 {
-    return solve(sudoku, 0);
+    return solve(sudoku, 0, 0);
 }
 
-bool RecursiveSudokuSolver::solve(Sudoku sud, int start)
+bool RecursiveSudokuSolver::solve(Sudoku sud, int row, int col)
 {
     if (sud.isSolved())
     {
@@ -21,17 +21,24 @@ bool RecursiveSudokuSolver::solve(Sudoku sud, int start)
         return true;
     }
 
-    if (start > DIMENSION * DIMENSION)
+    if (row >= DIMENSION || col >= DIMENSION)
         return false;
+
+    int nextRow = row;
+    int nextCol = (col + 1) % DIMENSION;
+
+    if (nextCol < col)
+        nextRow++;
     
-    if (sud.get(start) > 0)
-        return solve(sud, start + 1);
+    if (sud.get(row, col) > 0)
+        return solve(sud, nextRow, nextCol);
 
     for (int i = 1; i <= DIMENSION; i++)
     {
-        if (sud.set(start, i))
+        Sudoku sudCopy = sud;
+        if (sudCopy.set(row, col, i))
         {
-            if(solve(sud, start + 1))
+            if(solve(sudCopy, nextRow, nextCol))
             {
                 return true;
             }

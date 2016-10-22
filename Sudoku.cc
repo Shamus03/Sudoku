@@ -6,75 +6,93 @@ using namespace std;
 Sudoku::Sudoku()
 {
     remaining = DIMENSION * DIMENSION;
+    int i;
+    int j;
+    int k;
 
-    for (int i = 0; i < DIMENSION * DIMENSION; i++)
+    for (i = 0; i < DIMENSION; i++)
     {
-        grid[i] = 0;
+        for (j = 0; j < DIMENSION; j++)
+        {
+            grid[i * DIMENSION + j] = 0;
+            for (k = 0; k < DIMENSION; k++)
+            {
+                markup[(i * DIMENSION + j) * DIMENSION + k] = true;
+            }
+        }
     }
 }
 
 Sudoku::Sudoku(string numbers)
 {
     remaining = DIMENSION * DIMENSION;
-    int num, i;
+    int i;
+    int j;
+    int k;
 
-    for (i = 0; i < DIMENSION * DIMENSION; i++)
+    for (i = 0; i < DIMENSION; i++)
     {
-        num = numbers[i] - '0';
-        grid[i] = num;
-
-        if (num > 0)
-            remaining--;
+        for (j = 0; j < DIMENSION; j++)
+        {
+            grid[i * DIMENSION + j] = 0;
+            for (k = 0; k < DIMENSION; k++)
+            {
+                markup[(i * DIMENSION + j) * DIMENSION + k] = true;
+            }
+        }
     }
-}
 
-bool Sudoku::set(int absolute, int val)
-{
-    return set(absolute / DIMENSION, absolute % DIMENSION, val);
+    int num;
+    int count = 0;
+    for (i = 0; i < DIMENSION; i++)
+    {
+        for (j = 0; j < DIMENSION; j++)
+        {
+            num = numbers[count] - '0';
+            if (num > 0)
+            {
+                set(i, j, num);
+            }
+
+            count++;
+        }
+    }
 }
 
 bool Sudoku::set(int row, int col, int val)
 {
-    if (isValidMove(row, col, val))
+    if (val > 0 && isValidMove(row, col, val))
     {
-        if (get(row, col) == 0 && val > 0)
+        if (get(row, col) == 0)
             remaining--;
-        else if (get(row, col) > 0 && val == 0)
-            remaining++;
 
         grid[row * DIMENSION + col] = val;
+
+        int i;
+        int groupRow;
+        int groupCol;
+        int mi;
+        int mj;
+        int mk;
+
+        for (i = 0; i < DIMENSION; i++)
+        {
+            markup[(row * DIMENSION + i) * DIMENSION + val - 1] = false;
+            markup[(i * DIMENSION + col) * DIMENSION + val - 1] = false;
+
+            groupRow = row - row % SUDOKU_SIZE;
+            groupCol = col - col % SUDOKU_SIZE;
+
+            mi = groupRow + i / SUDOKU_SIZE;
+            mj = groupCol + i % SUDOKU_SIZE;
+            mk = val - 1;
+            markup[(mi * DIMENSION + mj) * DIMENSION + mk] = false;
+        }
 
         return true;
     }
 
     return false;
-}
-
-bool Sudoku::isValidMove(int row, int col, int val)
-{
-    if (val == 0)
-        return true;
-
-    if (val < 1 || val > DIMENSION)
-        return false;
-
-    if (get(row, col) == val)
-        return true;
-
-    int i;
-    int gRow, gCol;
-    for (i = 0; i < DIMENSION; i++)
-    {
-        gRow = row - row % SUDOKU_SIZE;
-        gCol = col - col % SUDOKU_SIZE;
-
-        if (get(i, col) == val || get(row, i) == val
-            || get(gRow + i / SUDOKU_SIZE, gCol + i % SUDOKU_SIZE) == val)
-        {
-            return false;
-        }
-    }
-    return true;
 }
 
 void Sudoku::print()
