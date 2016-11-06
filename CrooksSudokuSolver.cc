@@ -17,12 +17,15 @@ bool CrooksSudokuSolver::solve()
     {
         madeProgress = false;
 
+        // Clever use of short-circuiting to repeat the more efficient
+        // routune as much as possible.
         while (solveExposedSingles() || solveHiddenSingles())
         {
             madeProgress = true;
         }
     }
 
+    // Solve the puzzle using the recursive method once progress has halted
     if (!sudoku.isSolved())
     {
         RecursiveSudokuSolver finishIt (sudoku);
@@ -40,10 +43,12 @@ bool CrooksSudokuSolver::solveExposedSingles()
     int singleNum;
     int numPossible;
 
+    // Iterate through every cell
     for (row = 0; row < DIMENSION; row++)
     {
         for (col = 0; col < DIMENSION; col++)
         {
+            // If a number is already present, move to the next cell
             if (sudoku.get(row, col) != 0)
                 continue;
 
@@ -51,6 +56,7 @@ bool CrooksSudokuSolver::solveExposedSingles()
             numPossible = 0;
             for (num = 1; num <= DIMENSION; num++)
             {
+                // Counting the number of possible moves in the cell
                 if (sudoku.isValidMove(row, col, num))
                 {
                     numPossible++;
@@ -63,6 +69,7 @@ bool CrooksSudokuSolver::solveExposedSingles()
                 }
             }
 
+            // If only one number is possible, assign that number
             if (numPossible == 1)
             {
                 sudoku.set(row, col, singleNum);
@@ -82,6 +89,7 @@ bool CrooksSudokuSolver::solveHiddenSingles()
     int rowCount, colCount;
     int rowSingle, colSingle;
 
+    // Iterate through rows and columns simultaneously
     for (i = 0; i < DIMENSION; i++)
     {
         rowCount = 0;
@@ -89,8 +97,10 @@ bool CrooksSudokuSolver::solveHiddenSingles()
         rowSingle = -1;
         colSingle = -1;
 
+        // Iterate through every number
         for (num = 1; num <= DIMENSION; num++)
         {
+            // Count locations where num is a possible move
             for (j = 0; j < DIMENSION; j++)
             {
                 if (sudoku.isValidMove(i, j, num))
@@ -106,6 +116,7 @@ bool CrooksSudokuSolver::solveHiddenSingles()
                 }
             }
 
+            // If num is only possible in 1 row/column, assign that number
             if (rowCount == 1)
             {
                 sudoku.set(i, rowSingle, num);

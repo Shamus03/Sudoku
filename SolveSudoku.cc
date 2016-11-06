@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
         int i = 1;
         while (getline(myfile, line))
         {
+            // Check every line, ignoring comment lines
             if (line.length() > 0 && line.at(0) >= '0' && line.at(0) <= '9')
             {
                 cout << "Sudoku #" << i << ":" << endl;
