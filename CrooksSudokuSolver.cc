@@ -146,7 +146,7 @@ bool CrooksSudokuSolver::solveHiddenSingles()
 
 void CrooksSudokuSolver::print()
 {
-    /*
+    //*
     cout << "Crook's Algorithm Sudoku Solver ";
 
     if (sudoku.isSolved())
@@ -162,11 +162,11 @@ void CrooksSudokuSolver::print()
         cout << "(unsolved)" << endl;
     }   
     sudoku.print();
-    /*/
+    /* This portion of code is for data collection to easily import into excel
     if (sudoku.isSolved())
     {
         cout << exposedSinglesFound << ", " << hiddenSinglesFound << ", "
             << resortedToRecursion << endl;
     }
-    //*/
+    */
 }
