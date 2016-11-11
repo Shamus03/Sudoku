@@ -7,6 +7,9 @@ using namespace std;
 CrooksSudokuSolver::CrooksSudokuSolver(Sudoku sudok)
 {
     sudoku = sudok;
+    exposedSinglesFound = 0;
+    hiddenSinglesFound = 0;
+    resortedToRecursion = false;
 }
 
 bool CrooksSudokuSolver::solve()
@@ -31,6 +34,7 @@ bool CrooksSudokuSolver::solve()
         RecursiveSudokuSolver finishIt (sudoku);
         finishIt.solve();
         sudoku = finishIt.getSudoku();
+        resortedToRecursion = true;
     }
 
     return sudoku.isSolved();
@@ -73,6 +77,7 @@ bool CrooksSudokuSolver::solveExposedSingles()
             if (numPossible == 1)
             {
                 sudoku.set(row, col, singleNum);
+                exposedSinglesFound++;
                 madeProgress = true;
             }
         }
@@ -128,6 +133,11 @@ bool CrooksSudokuSolver::solveHiddenSingles()
                 sudoku.set(colSingle, i, num);
                 madeProgress = true;
             }
+
+            if (rowCount == 1 || colCount == 1)
+            {
+                hiddenSinglesFound++;
+            }
         }
     }
 
@@ -136,7 +146,27 @@ bool CrooksSudokuSolver::solveHiddenSingles()
 
 void CrooksSudokuSolver::print()
 {
-    cout << "Crook's Algorithm Sudoku Solver "
-        << (sudoku.isSolved() ? "(solved)" : "(unsolved)") << endl;
+    /*
+    cout << "Crook's Algorithm Sudoku Solver ";
+
+    if (sudoku.isSolved())
+    {
+        cout << "(solved)" << endl;
+        cout << "Exposed Singles Found: " << exposedSinglesFound << endl;
+        cout << "Hidden  Singles Found: " << hiddenSinglesFound << endl;
+        cout << "Resorted to Recursion: " <<
+            (resortedToRecursion ? "True" : "False") << endl;
+    }
+    else
+    {
+        cout << "(unsolved)" << endl;
+    }   
     sudoku.print();
+    /*/
+    if (sudoku.isSolved())
+    {
+        cout << exposedSinglesFound << ", " << hiddenSinglesFound << ", "
+            << resortedToRecursion << endl;
+    }
+    //*/
 }

@@ -9,6 +9,9 @@ class CrooksSudokuSolver : public SudokuSolver
     private:
         bool solveExposedSingles();
         bool solveHiddenSingles();
+        int exposedSinglesFound;
+        int hiddenSinglesFound;
+        bool resortedToRecursion;
     public:
         CrooksSudokuSolver(Sudoku sudok);
         bool solve();
