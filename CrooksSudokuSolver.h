@@ -12,6 +12,7 @@ class CrooksSudokuSolver : public SudokuSolver
         int exposedSinglesFound;
         int hiddenSinglesFound;
         bool resortedToRecursion;
+        int recursiveGuessesMade;
     public:
         CrooksSudokuSolver(Sudoku sudok);
         bool solve();

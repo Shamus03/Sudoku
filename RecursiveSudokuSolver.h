@@ -8,10 +8,12 @@ class RecursiveSudokuSolver : public SudokuSolver
 {
     private:
         bool solve(Sudoku sud, int row, int col);
+        int movesMade;
     public:
         RecursiveSudokuSolver(Sudoku sudok);
         bool solve();
         void print();
+        int getRecursiveGuessesMade();
 };
 
 #endif

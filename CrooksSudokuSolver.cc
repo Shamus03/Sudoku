@@ -9,6 +9,7 @@ CrooksSudokuSolver::CrooksSudokuSolver(Sudoku sudok)
     sudoku = sudok;
     exposedSinglesFound = 0;
     hiddenSinglesFound = 0;
+    recursiveGuessesMade = 0;
     resortedToRecursion = false;
 }
 
@@ -35,6 +36,7 @@ bool CrooksSudokuSolver::solve()
         finishIt.solve();
         sudoku = finishIt.getSudoku();
         resortedToRecursion = true;
+        recursiveGuessesMade = finishIt.getRecursiveGuessesMade();
     }
 
     return sudoku.isSolved();
@@ -154,8 +156,9 @@ void CrooksSudokuSolver::print()
         cout << "(solved)" << endl;
         cout << "Exposed Singles Found: " << exposedSinglesFound << endl;
         cout << "Hidden  Singles Found: " << hiddenSinglesFound << endl;
-        cout << "Resorted to Recursion: " <<
-            (resortedToRecursion ? "True" : "False") << endl;
+        cout << "Resorted to Recursion: "
+            << (resortedToRecursion ? "True" : "False") << endl;
+        cout << "Recursive Guesses Made: " << recursiveGuessesMade << endl;
     }
     else
     {
@@ -166,7 +169,7 @@ void CrooksSudokuSolver::print()
     if (sudoku.isSolved())
     {
         cout << exposedSinglesFound << ", " << hiddenSinglesFound << ", "
-            << resortedToRecursion << endl;
+            << resortedToRecursion << << recursiveGuessesMade << endl;
     }
     */
 }

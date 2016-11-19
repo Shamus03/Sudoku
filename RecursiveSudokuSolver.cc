@@ -6,6 +6,7 @@ using namespace std;
 RecursiveSudokuSolver::RecursiveSudokuSolver(Sudoku sudok)
 {
     sudoku = sudok;
+    movesMade = 0;
 }
 
 bool RecursiveSudokuSolver::solve()
@@ -53,6 +54,7 @@ bool RecursiveSudokuSolver::solve(Sudoku sud, int row, int col)
         // Make any possible moves and attempt to continue solving
         if (sudCopy.set(row, col, i))
         {
+            movesMade++;
             if(solve(sudCopy, nextRow, nextCol))
             {
                 // If a solution is found, cascade return to solve(0, 0)
@@ -68,9 +70,22 @@ bool RecursiveSudokuSolver::solve(Sudoku sud, int row, int col)
     return false;
 }
 
+int RecursiveSudokuSolver::getRecursiveGuessesMade()
+{
+    return movesMade;
+}
+
 void RecursiveSudokuSolver::print()
 {
-    cout << "Recursive Sudoku Solver "
-        << (sudoku.isSolved() ? "(solved)" : "(unsolved)") << endl;
+    cout << "Recursive Sudoku Solver ";
+    if (sudoku.isSolved())
+    {
+        cout << "(solved)" << endl;
+        cout << "Recursive Guesses Made: " << movesMade << endl;
+    }
+    else
+    {
+        cout << "(unsolved)" << endl;
+    }
     sudoku.print();
 }
