@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
 {
     if (!(argc == 2 || argc == 3))
     {
-        cerr << "Usage: " << argv[0] << "(-r) [FILE]" << endl;
+        cerr << "Usage: " << argv[0] << " (-r) [FILE]" << endl;
         return 1;
     }
 
