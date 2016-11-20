@@ -4,3 +4,4 @@
 # in a tabular form to simplify analysis.
 
 ./SolveSudoku $@ | grep -E "(: |Sudoku #)" | awk '{print $NF}' | tr -s '\n:' ' ' | tr '#' '\n'
+echo
