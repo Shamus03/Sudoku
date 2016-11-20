@@ -1,7 +1,7 @@
 #!/bin/bash
 # Runs the program on a puzzle twice:
 # once normally and once with only recursion.
-# The average number of recursive guesses is shown.
+# The average and standard deviation of the number of guesses made is shown.
 
 AWKCOMMAND='{sum += $NF; sumsq += $NF^2} END{print "Average Recursive Guesses: "sum/NR; print "Standard Deviation of Guesses: "sqrt(sumsq/NR-(sum/NR)^2)}'
 
