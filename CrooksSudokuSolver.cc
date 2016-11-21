@@ -21,7 +21,7 @@ bool CrooksSudokuSolver::solve()
     {
         madeProgress = false;
 
-        // Clever use of short-circuiting to repeat the more efficient
+        // Use of short-circuiting to repeat the more efficient
         // routune as much as possible.
         while (solveExposedSingles() || solveHiddenSingles())
         {
@@ -148,7 +148,6 @@ bool CrooksSudokuSolver::solveHiddenSingles()
 
 void CrooksSudokuSolver::print()
 {
-    //*
     cout << "Crook's Algorithm Sudoku Solver ";
 
     if (sudoku.isSolved())
@@ -165,11 +164,4 @@ void CrooksSudokuSolver::print()
         cout << "(unsolved)" << endl;
     }   
     sudoku.print();
-    /* This portion of code is for data collection to easily import into excel
-    if (sudoku.isSolved())
-    {
-        cout << exposedSinglesFound << ", " << hiddenSinglesFound << ", "
-            << resortedToRecursion << << recursiveGuessesMade << endl;
-    }
-    */
 }

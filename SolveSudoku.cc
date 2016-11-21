@@ -44,6 +44,7 @@ int main(int argc, char* argv[])
                 cout << "Sudoku #" << i << ":" << endl;
                 sudok = Sudoku(line);
 
+                // Cannot use polymorphism on anonymous objects
                 if (recursiveOnly)
                 {
                     RecursiveSudokuSolver recurs = 
